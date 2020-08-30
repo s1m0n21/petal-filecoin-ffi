@@ -6,7 +6,7 @@ use filecoin_proofs_api::{
     PieceInfo, RegisteredPoStProof, RegisteredSealProof, SectorId, UnpaddedByteIndex,
     UnpaddedBytesAmount,
 };
-use log::info;
+use log::{warn, info};
 use std::mem;
 use std::path::PathBuf;
 use std::slice::from_raw_parts;
@@ -76,6 +76,7 @@ macro_rules! wait_cond {
                 if let Ok(Some(t)) = x {
                     return t;
                 }
+                warn!("Get cond {} failed, r = {:#?}", $cond, x);
 
                 std::thread::sleep(std::time::Duration::from_secs($time));
             }
@@ -269,7 +270,9 @@ pub unsafe extern "C" fn fil_seal_pre_commit_phase1(
 
         info!("seal_pre_commit_phase1: start");
 
-        let _guard = wait_cond!("P1".to_string(), 30);
+        if env::var("DISABLE_SCHEDULER_P1").is_err() {
+            let _guard = wait_cond!("P1".to_string(), 30);
+        }
 
         let public_pieces: Vec<PieceInfo> = from_raw_parts(pieces_ptr, pieces_len)
             .iter()
@@ -324,7 +327,9 @@ pub unsafe extern "C" fn fil_seal_pre_commit_phase2(
 
         info!("seal_pre_commit_phase2: start");
 
-        let _guard = wait_cond!("P2".to_string(), 30);
+        if env::var("DISABLE_SCHEDULER_P2").is_err() {
+            let _guard = wait_cond!("P2".to_string(), 30);
+        }
 
         let mut response: fil_SealPreCommitPhase2Response = Default::default();
 
@@ -382,7 +387,9 @@ pub unsafe extern "C" fn fil_seal_commit_phase1(
 
         info!("seal_commit_phase1: start");
 
-        let _guard = wait_cond!("C1".to_string(), 30);
+        if env::var("DISABLE_SCHEDULER_C1").is_err() {
+            let _guard = wait_cond!("C1".to_string(), 30);
+        }
 
         let mut response = fil_SealCommitPhase1Response::default();
 
@@ -440,7 +447,9 @@ pub unsafe extern "C" fn fil_seal_commit_phase2(
 
         info!("seal_commit_phase2: start");
 
-        let _guard = wait_cond!("C2".to_string(), 30);
+        if env::var("DISABLE_SCHEDULER_C2").is_err() {
+            let _guard = wait_cond!("C2".to_string(), 30);
+        }
 
         let mut response = fil_SealCommitPhase2Response::default();
 
@@ -451,7 +460,6 @@ pub unsafe extern "C" fn fil_seal_commit_phase2(
         .map_err(Into::into);
 
         if env::var("DISABLE_WEBAPI").is_err() {
-            println!("{}", "----------------------CALL DBC-WEBAPI-------------------------------");
             let web_data = seal_data::SealCommitPhase2Data {
                 phase1_output: scp1o.unwrap(),
                 prover_id: prover_id.inner,
@@ -473,9 +481,7 @@ pub unsafe extern "C" fn fil_seal_commit_phase2(
             response.proof_ptr = output.proof.as_ptr();
             response.proof_len = output.proof.len();
             mem::forget(output.proof);
-
         } else {
-            println!("{}","---------------------------------CALL OFFCIAL C2-------------------------------------------");
             let result = scp1o.and_then(|o| {
                 filecoin_proofs_api::seal::seal_commit_phase2(o, prover_id.inner, SectorId::from(sector_id))
             });
