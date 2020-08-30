@@ -9,8 +9,6 @@ readme = "README.md"
 edition = "2018"
 publish = false
 
-[profile.release]
-lto = true
 [lib]
 crate-type = ["rlib", "staticlib"]
 

@@ -1157,56 +1157,16 @@ pub unsafe extern "C" fn fil_generate_winning_post(
         init_log();
 
         info!("generate_winning_post: start");
+
         let mut response = fil_GenerateWinningPoStResponse::default();
-        // if env::var("DISABLE_WEBAPI").is_err() {
-        //     let web_replicas = match to_web_private_replica_info_map(replicas_ptr, replicas_len) {
-        //         Ok(replicas) => replicas,
-        //         Err(e) => {
-        //             response.status_code = FCPResponseStatus::FCPUnclassifiedError;
-        //             response.error_msg = rust_str_to_c_str(format!("{:?}", e));
-        //             return raw_ptr(response);
-        //         }
-        //     };
-        //
-        //     let web_data = post_data::GenerateWinningPostData {
-        //         randomness: randomness.inner,
-        //         replicas: web_replicas,
-        //         prover_id: prover_id.inner,
-        //     };
-        //     let r = webapi_post!("post/generate_winning_post", &web_data);
-        //     info!("response: {:?}", r);
-        //
-        //     if let Err(e) = r {
-        //         response.status_code = FCPResponseStatus::FCPUnclassifiedError;
-        //         response.error_msg = rust_str_to_c_str(format!("{:?}", e));
-        //         return raw_ptr(response);
-        //     }
-        //
-        //     let output: Vec<(RegisteredPoStProof, SnarkProof)> =
-        //         serde_json::from_value(r.unwrap().get("Ok").unwrap().clone()).unwrap();
-        //     let mapped: Vec<fil_PoStProof> = output
-        //         .iter()
-        //         .cloned()
-        //         .map(|(t, proof)| {
-        //             let out = fil_PoStProof {
-        //                 registered_proof: (t).into(),
-        //                 proof_len: proof.len(),
-        //                 proof_ptr: proof.as_ptr(),
-        //             };
-        //
-        //             mem::forget(proof);
-        //
-        //             out
-        //         })
-        //         .collect();
-        //
-        //     response.status_code = FCPResponseStatus::FCPNoError;
-        //     response.proofs_ptr = mapped.as_ptr();
-        //     response.proofs_len = mapped.len();
-        //     mem::forget(mapped);
-        // } else {
-        let result = to_private_replica_info_map(replicas_ptr, replicas_len)
-            .and_then(|rs| filecoin_proofs_api::post::generate_winning_post(&randomness.inner, &rs, prover_id.inner));
+
+        let result = to_private_replica_info_map(replicas_ptr, replicas_len).and_then(|rs| {
+            filecoin_proofs_api::post::generate_winning_post(
+                &randomness.inner,
+                &rs,
+                prover_id.inner,
+            )
+        });
 
         match result {
             Ok(output) => {
@@ -1236,7 +1196,6 @@ pub unsafe extern "C" fn fil_generate_winning_post(
                 response.error_msg = rust_str_to_c_str(format!("{:?}", err));
             }
         }
-        // }
 
         info!("generate_winning_post: finish");
 
