@@ -400,108 +400,108 @@ pub unsafe extern "C" fn fil_seal_commit_phase1(
             comm_d: comm_d.inner,
         };
 
-        // if env::var("DISABLE_WEBAPI").is_err() {
-        //     let replica_file = c_str_to_rust_str(replica_path).to_string();
-        //     let cache_path = c_str_to_rust_str(cache_dir_path).to_string();
-        //
-        //     // upload all files in cache dir
-        //     for path in fs::read_dir(cache_path).unwrap() {
-        //         trace!("uploading file: {:?}", path);
-        //
-        //         match webapi_upload(format!("{}", path.unwrap().path().display())) {
-        //             Ok(f) => f,
-        //             Err(e) => {
-        //                 warn!("webapi_upload failed: {:?}", e);
-        //                 response.status_code = FCPResponseStatus::FCPUnclassifiedError;
-        //                 response.error_msg = rust_str_to_c_str(format!("{:?}", e));
-        //                 return raw_ptr(response);
-        //             },
-        //         };
-        //     }
-        //
-        //     // upload replica to remote
-        //     let upload_file = match webapi_upload(replica_file) {
-        //         Ok(f) => f,
-        //         Err(e) => {
-        //             warn!("webapi_upload failed: {:?}", e);
-        //             response.status_code = FCPResponseStatus::FCPUnclassifiedError;
-        //             response.error_msg = rust_str_to_c_str(format!("{:?}", e));
-        //             return raw_ptr(response);
-        //         },
-        //     };
-        //
-        //     let public_pieces: Vec<WebPieceInfo> = from_raw_parts(pieces_ptr, pieces_len)
-        //         .iter()
-        //         .cloned()
-        //         .map(Into::into)
-        //         .map(|x| WebPieceInfo::from_object(x))
-        //         .collect();
-        //
-        //     let web_data = seal_data::SealCommitPhase1Data {
-        //         cache_path: "/tmp/upload/".to_owned(),
-        //         replica_path: upload_file,
-        //         prover_id: prover_id.inner,
-        //         sector_id: SectorId::from(sector_id),
-        //         ticket: ticket.inner,
-        //         seed: seed.inner,
-        //         pre_commit: spcp2o,
-        //         piece_infos: public_pieces,
-        //     };
-        //
-        //     let r = webapi_post_polling!("seal/seal_commit_phase1", &web_data);
-        //     info!("response: {:?}", r);
-        //
-        //     if let Err(e) = r {
-        //         response.status_code = FCPResponseStatus::FCPUnclassifiedError;
-        //         response.error_msg = rust_str_to_c_str(format!("{:?}", e));
-        //         return raw_ptr(response);
-        //     }
-        //
-        //     let r = r.unwrap();
-        //     let output: SealCommitPhase1Output = serde_json::from_value(r.get("Ok").unwrap().clone()).unwrap();
-        //     match serde_json::to_vec(&output) {
-        //         Ok(output) => {
-        //             response.status_code = FCPResponseStatus::FCPNoError;
-        //             response.seal_commit_phase1_output_ptr = output.as_ptr();
-        //             response.seal_commit_phase1_output_len = output.len();
-        //             mem::forget(output);
-        //         }
-        //         Err(err) => {
-        //             response.status_code = FCPResponseStatus::FCPUnclassifiedError;
-        //             response.error_msg = rust_str_to_c_str(format!("{:?}", err));
-        //         }
-        //     }
-        // } else {
-        let public_pieces: Vec<PieceInfo> = from_raw_parts(pieces_ptr, pieces_len)
-            .iter()
-            .cloned()
-            .map(Into::into)
-            .collect();
+        if env::var("DISABLE_WEBAPI").is_err() {
+            let replica_file = c_str_to_rust_str(replica_path).to_string();
+            let cache_path = c_str_to_rust_str(cache_dir_path).to_string();
 
-        let result = filecoin_proofs_api::seal::seal_commit_phase1(
-            c_str_to_pbuf(cache_dir_path),
-            c_str_to_pbuf(replica_path),
-            prover_id.inner,
-            SectorId::from(sector_id),
-            ticket.inner,
-            seed.inner,
-            spcp2o,
-            &public_pieces,
-        );
+            // upload all files in cache dir
+            for path in fs::read_dir(cache_path).unwrap() {
+                trace!("uploading file: {:?}", path);
 
-        match result.and_then(|output| serde_json::to_vec(&output).map_err(Into::into)) {
-            Ok(output) => {
-                response.status_code = FCPResponseStatus::FCPNoError;
-                response.seal_commit_phase1_output_ptr = output.as_ptr();
-                response.seal_commit_phase1_output_len = output.len();
-                mem::forget(output);
+                match webapi_upload(format!("{}", path.unwrap().path().display())) {
+                    Ok(f) => f,
+                    Err(e) => {
+                        warn!("webapi_upload failed: {:?}", e);
+                        response.status_code = FCPResponseStatus::FCPUnclassifiedError;
+                        response.error_msg = rust_str_to_c_str(format!("{:?}", e));
+                        return raw_ptr(response);
+                    },
+                };
             }
-            Err(err) => {
+
+            // upload replica to remote
+            let upload_file = match webapi_upload(replica_file) {
+                Ok(f) => f,
+                Err(e) => {
+                    warn!("webapi_upload failed: {:?}", e);
+                    response.status_code = FCPResponseStatus::FCPUnclassifiedError;
+                    response.error_msg = rust_str_to_c_str(format!("{:?}", e));
+                    return raw_ptr(response);
+                },
+            };
+
+            let public_pieces: Vec<WebPieceInfo> = from_raw_parts(pieces_ptr, pieces_len)
+                .iter()
+                .cloned()
+                .map(Into::into)
+                .map(|x| WebPieceInfo::from_object(x))
+                .collect();
+
+            let web_data = seal_data::SealCommitPhase1Data {
+                cache_path: "/tmp/upload/".to_owned(),
+                replica_path: upload_file,
+                prover_id: prover_id.inner,
+                sector_id: SectorId::from(sector_id),
+                ticket: ticket.inner,
+                seed: seed.inner,
+                pre_commit: spcp2o,
+                piece_infos: public_pieces,
+            };
+
+            let r = webapi_post_polling!("seal/seal_commit_phase1", &web_data);
+            info!("response: {:?}", r);
+
+            if let Err(e) = r {
                 response.status_code = FCPResponseStatus::FCPUnclassifiedError;
-                response.error_msg = rust_str_to_c_str(format!("{:?}", err));
+                response.error_msg = rust_str_to_c_str(format!("{:?}", e));
+                return raw_ptr(response);
+            }
+
+            let r = r.unwrap();
+            let output: SealCommitPhase1Output = serde_json::from_value(r.get("Ok").unwrap().clone()).unwrap();
+            match serde_json::to_vec(&output) {
+                Ok(output) => {
+                    response.status_code = FCPResponseStatus::FCPNoError;
+                    response.seal_commit_phase1_output_ptr = output.as_ptr();
+                    response.seal_commit_phase1_output_len = output.len();
+                    mem::forget(output);
+                }
+                Err(err) => {
+                    response.status_code = FCPResponseStatus::FCPUnclassifiedError;
+                    response.error_msg = rust_str_to_c_str(format!("{:?}", err));
+                }
+            }
+        } else {
+            let public_pieces: Vec<PieceInfo> = from_raw_parts(pieces_ptr, pieces_len)
+                .iter()
+                .cloned()
+                .map(Into::into)
+                .collect();
+
+            let result = filecoin_proofs_api::seal::seal_commit_phase1(
+                c_str_to_pbuf(cache_dir_path),
+                c_str_to_pbuf(replica_path),
+                prover_id.inner,
+                SectorId::from(sector_id),
+                ticket.inner,
+                seed.inner,
+                spcp2o,
+                &public_pieces,
+            );
+
+            match result.and_then(|output| serde_json::to_vec(&output).map_err(Into::into)) {
+                Ok(output) => {
+                    response.status_code = FCPResponseStatus::FCPNoError;
+                    response.seal_commit_phase1_output_ptr = output.as_ptr();
+                    response.seal_commit_phase1_output_len = output.len();
+                    mem::forget(output);
+                }
+                Err(err) => {
+                    response.status_code = FCPResponseStatus::FCPUnclassifiedError;
+                    response.error_msg = rust_str_to_c_str(format!("{:?}", err));
+                }
             }
         }
-        // }
 
         info!("seal_commit_phase1: finish");
 
