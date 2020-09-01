@@ -1,16 +1,15 @@
-use ffi_toolkit::{
-    c_str_to_pbuf, catch_panic_response, raw_ptr, rust_str_to_c_str, FCPResponseStatus,
-};
-use filecoin_proofs_api::seal::{SealCommitPhase2Output, SealPreCommitPhase2Output};
+use ffi_toolkit::{c_str_to_pbuf, catch_panic_response, raw_ptr, rust_str_to_c_str, FCPResponseStatus, c_str_to_rust_str};
+use filecoin_proofs_api::seal::{SealCommitPhase1Output, SealCommitPhase2Output, SealPreCommitPhase2Output};
 use filecoin_proofs_api::{
     PieceInfo, RegisteredPoStProof, RegisteredSealProof, SectorId, UnpaddedByteIndex,
     UnpaddedBytesAmount,
 };
-use log::{warn, info};
+use log::{warn, info, trace};
 
 use std::mem;
 use std::path::PathBuf;
 use std::slice::from_raw_parts;
+use std::fs;
 
 use super::helpers::{c_to_rust_post_proofs, to_private_replica_info_map};
 use super::types::*;
@@ -24,6 +23,8 @@ use filecoin_webapi::*;
 use std::env;
 use std::net::SocketAddr;
 use std::sync::Mutex;
+use crate::util::rpc::webapi_upload;
+use filecoin_webapi::types::WebPieceInfo;
 
 lazy_static! {
     static ref RUNTIME: Mutex<Runtime> = { Mutex::new(Runtime::new().unwrap()) };

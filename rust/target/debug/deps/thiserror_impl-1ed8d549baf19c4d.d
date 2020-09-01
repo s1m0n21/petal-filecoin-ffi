@@ -1,0 +1,11 @@
+/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/debug/deps/libthiserror_impl-1ed8d549baf19c4d.so: /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/lib.rs /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/ast.rs /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/attr.rs /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/expand.rs /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/fmt.rs /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/prop.rs /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/valid.rs
+
+/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/debug/deps/thiserror_impl-1ed8d549baf19c4d.d: /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/lib.rs /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/ast.rs /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/attr.rs /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/expand.rs /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/fmt.rs /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/prop.rs /home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/valid.rs
+
+/home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/lib.rs:
+/home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/ast.rs:
+/home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/attr.rs:
+/home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/expand.rs:
+/home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/fmt.rs:
+/home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/prop.rs:
+/home/check1ag/.cargo/registry/src/github.com-1ecc6299db9ec823/thiserror-impl-1.0.20/src/valid.rs:

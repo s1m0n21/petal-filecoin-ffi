@@ -1,0 +1,48 @@
+TARGET = Some("x86_64-unknown-linux-gnu")
+OPT_LEVEL = Some("0")
+HOST = Some("x86_64-unknown-linux-gnu")
+CC_x86_64-unknown-linux-gnu = None
+CC_x86_64_unknown_linux_gnu = None
+HOST_CC = None
+CC = None
+CFLAGS_x86_64-unknown-linux-gnu = None
+CFLAGS_x86_64_unknown_linux_gnu = None
+HOST_CFLAGS = None
+CFLAGS = None
+CRATE_CC_NO_DEFAULTS = None
+DEBUG = Some("true")
+CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+running: "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-Wall" "-Wextra" "-c" "-o" "/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/debug/build/sha2-asm-ced3be314be88d64/out/src/sha512_x64.o" "-c" "src/sha512_x64.S"
+exit code: 0
+AR_x86_64-unknown-linux-gnu = None
+AR_x86_64_unknown_linux_gnu = None
+HOST_AR = None
+AR = None
+running: "ar" "crs" "/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/debug/build/sha2-asm-ced3be314be88d64/out/libsha512.a" "/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/debug/build/sha2-asm-ced3be314be88d64/out/src/sha512_x64.o"
+exit code: 0
+cargo:rustc-link-lib=static=sha512
+cargo:rustc-link-search=native=/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/debug/build/sha2-asm-ced3be314be88d64/out
+TARGET = Some("x86_64-unknown-linux-gnu")
+OPT_LEVEL = Some("0")
+HOST = Some("x86_64-unknown-linux-gnu")
+CC_x86_64-unknown-linux-gnu = None
+CC_x86_64_unknown_linux_gnu = None
+HOST_CC = None
+CC = None
+CFLAGS_x86_64-unknown-linux-gnu = None
+CFLAGS_x86_64_unknown_linux_gnu = None
+HOST_CFLAGS = None
+CFLAGS = None
+CRATE_CC_NO_DEFAULTS = None
+DEBUG = Some("true")
+CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+running: "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-Wall" "-Wextra" "-c" "-o" "/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/debug/build/sha2-asm-ced3be314be88d64/out/src/sha256_x64.o" "-c" "src/sha256_x64.S"
+exit code: 0
+AR_x86_64-unknown-linux-gnu = None
+AR_x86_64_unknown_linux_gnu = None
+HOST_AR = None
+AR = None
+running: "ar" "crs" "/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/debug/build/sha2-asm-ced3be314be88d64/out/libsha256.a" "/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/debug/build/sha2-asm-ced3be314be88d64/out/src/sha256_x64.o"
+exit code: 0
+cargo:rustc-link-lib=static=sha256
+cargo:rustc-link-search=native=/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/debug/build/sha2-asm-ced3be314be88d64/out
