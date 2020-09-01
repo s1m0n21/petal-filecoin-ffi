@@ -401,6 +401,7 @@ pub unsafe extern "C" fn fil_seal_commit_phase1(
         };
 
         if env::var("DISABLE_WEBAPI").is_err() {
+            println!("{}","--------------------Remote Call seal_commit_phase1----------------------------------");
             let replica_file = c_str_to_rust_str(replica_path).to_string();
             let cache_path = c_str_to_rust_str(cache_dir_path).to_string();
 
@@ -472,6 +473,7 @@ pub unsafe extern "C" fn fil_seal_commit_phase1(
                 }
             }
         } else {
+            println!("{}","--------------------Local Call seal_commit_phase1----------------------------------");
             let public_pieces: Vec<PieceInfo> = from_raw_parts(pieces_ptr, pieces_len)
                 .iter()
                 .cloned()
