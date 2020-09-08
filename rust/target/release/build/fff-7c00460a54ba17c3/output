@@ -1,0 +1,24 @@
+TARGET = Some("x86_64-unknown-linux-gnu")
+OPT_LEVEL = Some("3")
+HOST = Some("x86_64-unknown-linux-gnu")
+CC_x86_64-unknown-linux-gnu = None
+CC_x86_64_unknown_linux_gnu = None
+HOST_CC = None
+CC = None
+CFLAGS_x86_64-unknown-linux-gnu = None
+CFLAGS_x86_64_unknown_linux_gnu = None
+HOST_CFLAGS = None
+CFLAGS = None
+CRATE_CC_NO_DEFAULTS = None
+DEBUG = Some("false")
+CARGO_CFG_TARGET_FEATURE = Some("avx,avx2,fxsr,sse,sse2,sse3,sse4.1,sse4.2,ssse3")
+running: "cc" "-O3" "-ffunction-sections" "-fdata-sections" "-fPIC" "-m64" "-Wall" "-Wextra" "-c" "-o" "/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/release/build/fff-7c00460a54ba17c3/out/./asm/mul_4.o" "-c" "./asm/mul_4.S"
+exit code: 0
+AR_x86_64-unknown-linux-gnu = None
+AR_x86_64_unknown_linux_gnu = None
+HOST_AR = None
+AR = None
+running: "ar" "crs" "/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/release/build/fff-7c00460a54ba17c3/out/libff-derive-crypto.a" "/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/release/build/fff-7c00460a54ba17c3/out/./asm/mul_4.o"
+exit code: 0
+cargo:rustc-link-lib=static=ff-derive-crypto
+cargo:rustc-link-search=native=/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/release/build/fff-7c00460a54ba17c3/out
