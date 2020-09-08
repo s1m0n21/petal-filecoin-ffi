@@ -121,7 +121,7 @@ type publicSectorInfo struct {
 }
 
 type PrivateSectorInfo struct {
-	proof.SectorInfo
+	abi.SectorInfo
 	CacheDirPath     string
 	PoStProofType    abi.RegisteredPoStProof
 	SealedSectorPath string

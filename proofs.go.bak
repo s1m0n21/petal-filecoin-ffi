@@ -817,7 +817,7 @@ func fromFilPoStProofs(src []generated.FilPoStProof) ([]proof.PoStProof, error) 
 	return out, nil
 }
 
-func toFilPoStProofs(src []proof.PoStProof) ([]generated.FilPoStProof, uint, func(), error) {
+func toFilPoStProofs(src []abi.PoStProof) ([]generated.FilPoStProof, uint, func(), error) {
 	frees := make([]func(), len(src))
 
 	out := make([]generated.FilPoStProof, len(src))

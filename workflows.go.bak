@@ -341,14 +341,6 @@ func WorkflowGenerateWinningPoStSectorChallenge(t TestHelper) {
 	}
 }
 
-func randActorID() abi.ActorID {
-	bID, err := rand.Int(rand.Reader, big.NewInt(math.MaxInt64))
-	if err != nil {
-		panic(err)
-	}
-	return abi.ActorID(bID.Uint64())
-}
-
 func randUInt64() uint64 {
 	buf := make([]byte, 8)
 	_, err := rand.Read(buf)
