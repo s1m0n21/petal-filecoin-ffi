@@ -1,1 +1,0 @@
-{"rustc":10461004854123552879,"features":"","target":0,"profile":0,"path":0,"deps":[[2223730373528209381,"build_script_build",false,18286883024845183538]],"local":[{"RerunIfChanged":{"output":"release/build/proc-macro-nested-ee39a74a5772b311/output","paths":["build.rs"]}}],"rustflags":[],"metadata":0}

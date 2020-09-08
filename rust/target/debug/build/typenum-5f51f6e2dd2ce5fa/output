@@ -1,2 +1,0 @@
-cargo:rustc-env=TYPENUM_BUILD_CONSTS=/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/debug/build/typenum-5f51f6e2dd2ce5fa/out/consts.rs
-cargo:rustc-env=TYPENUM_BUILD_OP=/home/check1ag/Desktop/petal-filecoin-ffi/rust/target/debug/build/typenum-5f51f6e2dd2ce5fa/out/op.rs
